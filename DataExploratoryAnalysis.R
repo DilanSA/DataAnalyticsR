@@ -8,10 +8,12 @@
 
 #### INSTALACI??N Y ACTIVACI??NN DE PAQUETES
 
+#
 install.packages("dplyr")
 install.packages("corrplot")
 install.packages("ggplot2")
 
+#
 library(dplyr)
 library(corrplot)
 library(ggplot2)
