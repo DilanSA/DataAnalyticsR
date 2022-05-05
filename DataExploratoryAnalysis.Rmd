@@ -1,6 +1,6 @@
 ---
 title: "ANÁLISIS EXPLORATORO DE DATOS"
-author: "HELIX INSTITUTE OF SCIENCE"
+author: "Dilan Suárez -HELIX INSTITUTE OF SCIENCE"
 date: "24/4/2022"
 output:
   pdf_document: default
