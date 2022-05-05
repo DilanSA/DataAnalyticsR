@@ -1,0 +1,144 @@
+---
+title: "ANÁLISIS EXPLORATORO DE DATOS"
+author: "HELIX INSTITUTE OF SCIENCE"
+date: "24/4/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Instalación y activación de paquetes
+
+```{r}
+install.packages("dplyr")
+install.packages("corrplot")
+install.packages("ggplot2")
+
+library(dplyr)
+library(corrplot)
+library(ggplot2)
+```
+
+## Importando la base de datos de R
+
+Para este ejercicio utilizaremos la base de datos `CO2` "Carbon Dioxide Uptake in Grass Plants", correspondiente a un experimento sobre la tolerancia al frío de la especie de pasto *Echinochloa crus-galll.*
+
+```{r}
+data("CO2") #Importación de dataset
+CO2 #Visualización parcial en consola
+View(CO2) #Visualización completa en una nueva ventana
+```
+
+## Un Vistazo a los datos
+
+Para la obtención de algunos detalles sobre cómo está estructurada la base de datos, utilizaremos la función `glimpse()` contenida dentro del paquete **dplyr.**
+
+Esta función nos brinda información sobre:
+
+-   El número de filas (observaciones) y columnas (variables) que presenta la base de datos.
+
+-   La naturaleza de los elementos de cada variable (columna): \<*ord*\> , \<*fct*\>, \<*dbl*\>.
+
+-   Contenido de cada variable (columna) en forma de lista.
+
+Es importante también identificar la presencia de valores perdidos o "NA values" para que no generen conflictos al momento de realizar análisis estadísticos posteriores, para ello usaremos la función `is.na().`
+
+```{r}
+glimpse(CO2)
+is.na(CO2)
+```
+
+### Análisis de variables categóricas
+
+Para las variables categóricas podemos calcular tablas de frecuencia, es decir, ver el número de ocurrencias de cada categoría de la variable. Esto lo hacemos con la función `table()`.
+
+```{r}
+table(CO2$Plant)
+table(CO2$Type)
+table(CO2$Treatment)
+```
+
+#### Tablas de contingencia
+
+Para poder evaluar la frecuencia de dos variables categóricas podemos utilizar tablas de contingencia. Esto lo hacemos con la función `prop.table()`
+
+```{r}
+#Tablas de contingencia para cada combinación de variables categóricas. Valores expresados en porcentajes.
+Plant_vs_Type <- prop.table(table(CO2$Plant, CO2$Type),2)*100
+Plant_vs_Type
+Type_vs_Treatment <- prop.table(table(CO2$Type, CO2$Treatment),2)*100
+Type_vs_Treatment
+Plant_vs_Treatment <- prop.table(table(CO2$Plant, CO2$Treatment),2)*100
+Plant_vs_Treatment
+```
+
+### Análisis de variables numéricas
+
+Para calcular los estadísticos descriptivos de las variables numéricas utilizaremos la función `summary()`. Esta función de puede aplicar a toda la base de datos o solo a variables específicas dentro de mi base de datos. Los valores que nos brinda son:
+
+-   Valor mínimo
+
+-   Valor del 1er cuartil
+
+-   Mediana
+
+-   Promedio
+
+-   Valor del 3er cuartil
+
+-   Valor máximo
+
+```{r}
+summary(CO2$conc)
+summary(CO2$uptake)
+```
+
+#### Visualización de datos numéricos
+
+Una forma útil de explorar la distribución de los datos en variables numéricas es con histogramas. Estos podemos hacerlos con el comando `hist()`, donde ponemos como argumento el nombre de la tabla seguido de `$` y el nombre de la variable que deseamos graficar.
+
+```{r}
+
+hist(CO2$conc, col = "pink", border = "red", xlab ="Concentration (ml/L)", main = "Histogram")
+hist(CO2$uptake, col = "gray", border ="black", xlab ="Uptake (umol/m^2 sec)", main = "Histogram")
+```
+
+## Correlaciones
+
+Una correlación mide la relación lineal entre dos variables. De esta manera podemos establecer si una variable está influenciada por otra de forma positiva o negativa.
+
+El resultado de este análisis es un coeficiente que va de -1 a 1
+
+-   R = 1, la relación es positiva perfecta
+
+-   0 \< R \< 1 la relación es positiva
+
+-   R = 0 no hay relación lineal
+
+-   -1 \< R \< 0 la relación es negativa
+
+-   R = -1 la relación es negativa perfecta
+
+    ![](https://drive.google.com/uc?export=view&id=1vXa-1AdkFIEbg9o_-4MoXejbeopMxrfq)
+
+```{r eval=FALSE, include=FALSE}
+
+#Cálculo del coeficiente de correlación para las dos variables numéricas
+cor(CO2$conc, CO2$uptake)
+
+#Creación de una tabla que solo contenga las dos variables numéricas de la base de datos CO2
+cor <- data.frame(Concentration = CO2$conc, Uptake = CO2$uptake)
+cor
+
+#Creación de gráfica para 
+ggplot(cor, mapping = aes(x = Concentration, y = Uptake)) +
+  geom_point(color="blue", size = 1.5) +
+  labs(x = "Concentration" , y = "Uptake") +
+  geom_smooth(method = "lm", se = TRUE, color = "red", lwd = 0.5) +
+  theme(axis.line = element_line(colour = "black"), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.border = element_blank(), 
+        panel.background = element_blank()) +
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5)) 
+```
