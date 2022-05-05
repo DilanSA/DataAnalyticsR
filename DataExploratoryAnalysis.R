@@ -1,8 +1,8 @@
-#########################################################
-## Title: "ANÁLISIS EXPLORATORO DE DATOS"              ##
-## Author: "Dilan Suárez Agüero"                       ##
-## Date: "05/05/2022"                                  ##
-#########################################################
+############################################
+## Title: "ANÁLISIS EXPLORATORO DE DATOS" ##
+## Author: "Dilan Suárez Agüero"          ##
+## Date: "05/05/2022"                     ##
+############################################
 
 #### INSTALACIÓN Y ACTIVACIÓN DE PAQUETES
   
