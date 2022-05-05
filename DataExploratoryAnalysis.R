@@ -1,6 +1,6 @@
 #############################################
-## Title:  "AN??LISIS EXPLORATORO DE DATOS" ##
-## Author: "DILAN SU??REZ AG??ERO"           ##
+## Title:  "ANÁLISIS EXPLORATORO DE DATOS" ##
+## Author: "DILAN SUÁREZ AGÜERO"           ##
 ## Date:   "05/05/2022"                    ##
 #############################################
 
